@@ -4,13 +4,24 @@ import NumberofEvents from '../NumberofEvents';
 
 describe('<NumberofEvents /> component', () => {
 
-  let numberFilter;
+  let numberOfEventsWrapper;
 
   beforeAll(() => {
-    numberFilter = shallow(<NumberofEvents />);
+    numberOfEventsWrapper = shallow(<NumberofEvents />);
   });
 
   test('render the number of events menu', () => {
-    expect(numberFilter.find('.numberOfEvents')).toHaveLength(1);
+    expect(numberOfEventsWrapper.find('.numberOfEvents')).toHaveLength(1);
+  });
+
+  test('render events default', () => {
+    const numberOfEvents = numberOfEventsWrapper.prop('numberOfEvents');
+    expect(numberOfEventsWrapper.find('.numberInput').prop('value')).toBe(numberOfEvents);
+  });
+
+  test('change number of events with input value', () => {
+    const inputValue = { target: { value: 5}};
+    numberOfEventsWrapper.find('.numberInput').simulate('change', inputValue);
+    expect(numberOfEventsWrapper.state('numberOfEvents')).toBe(5);
   });
 });

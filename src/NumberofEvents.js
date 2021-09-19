@@ -1,33 +1,41 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import { ErrorAlert} from './Alert'; 
 
-function NumberofEvents(props) {
-  const [ eventsToShow, setEventsToShow ] = useState(props.eventsToShow);
-  const text = props.text
-
-  const handleChange = (event) => {
-    if(event.target.value === "") {
-      setEventsToShow(event.target.value);
-      props.updateEventNum("NoNum");
-    } else {
-      setEventsToShow(event.target.value);
-      props.updateEventNum(event.target.value)
-    }
+class NumberofEvents extends Component {
+  state = {
+    numberOfEvents: 15,
+    errorText: '',
   }
 
+  updateEventCount = (eventCount) => {
+    if(eventCount < 1 || eventCount > 15) {
+    return this.setState({
+      numberOfEvents: 0,
+      errorText: 'Please select a number between 1-15'
+    });
+  } else {
+    this.setState({
+      numberOfEvents: eventCount,
+      errorText: ''
+    });
+  }
+  };
+
+  render() {
     return (
       <div className="numberOfEvents">
-        <ErrorAlert text={text}/>
+        <ErrorAlert text={this.state.errorText}/>
         <label htmlFor="number">Events per page: </label>
           <input 
           type="number" 
           id="number" 
           className="numberInput"
-          value={eventsToShow}
+          value={this.props.numberOfEvents}
           placeholder="#" 
-          onChange={handleChange} />
+          onChange={(e) => this.updateEventCount(e.target.value)} />
       </div>
     )
+  }
 }
 
 export default NumberofEvents;
