@@ -41,7 +41,7 @@ test('User should see a list of suggestions when they search for a city', ({ giv
 
 test('User can select a city from the suggested list', ({ given, and, when, then }) => {
   let AppWrapper;
-  given('user was typing “Berlin” in the city textbox', () => {
+  given('user was typing “Berlin” in the city textbox', async () => {
     AppWrapper = await mount(<App />);
     AppWrapper.find('.city').simulate('change', { target: { value: 'Berlin' } });
   });
