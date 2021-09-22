@@ -7,7 +7,7 @@ describe('show/hide an event details', () => {
     jest.setTimeout(30000);
     browser = await puppeteer.launch({
       headless: false,
-      slowMo: 250, slow //down by 250ms
+      slowMo: 250, //slowdown by 250ms
     });
     page = await browser.newPage();
     await page.goto('http://localhost:3000/');
