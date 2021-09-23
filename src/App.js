@@ -10,7 +10,7 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 15,
-    
+    currentLocation: 'all'
   }
 
   componentDidMount() {
@@ -27,23 +27,36 @@ class App extends Component {
     this.mounted = false;
   }
 
+    //update events counts and location
   updateEvents = (location) => {
     getEvents().then((events) => {
       const locationEvents = (location === 'all') ?
       events :
       events.filter((event) => event.location === location);
+      const {numberOfEvents} = this.state;
       this.setState({
-        events: locationEvents
+        //events: locationEvents
+        events: locationEvents.slice(0, numberOfEvents),
+        currentLocation: location,
       });
     });
   }
+
+    // handle pagination
+    handleEventCount = (eventCount) => {
+      const { currentLocation } = this.state;
+      this.setState({
+        numberOfEvents: eventCount
+      });
+      this.updateEvents(currentLocation);
+    }
 
   render() {
     return (
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents}/>
         <EventList events={this.state.events}/>
-        <NumberofEvents />
+        <NumberofEvents onHandleEventCount={this.handleEventCount} numberOfEvents={this.state.numberOfEvents} />
       </div>
     );
   } 

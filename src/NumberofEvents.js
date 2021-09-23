@@ -7,10 +7,11 @@ class NumberofEvents extends Component {
     errorText: '',
   }
 
-  updateEventCount = (eventCount) => {
+  updateEventCount = (event) => {
+    const eventCount = event.target.value;
     if(eventCount < 1 || eventCount > 15) {
     return this.setState({
-      numberOfEvents: 0,
+      numberOfEvents: eventCount,
       errorText: 'Please select a number between 1-15'
     });
   } else {
@@ -19,6 +20,7 @@ class NumberofEvents extends Component {
       errorText: ''
     });
   }
+  this.props.onHandleEventCount(eventCount);
   };
 
   render() {
@@ -32,7 +34,7 @@ class NumberofEvents extends Component {
           className="numberInput"
           value={this.props.numberOfEvents}
           placeholder="#" 
-          onChange={(e) => this.updateEventCount(e.target.value)} />
+          onChange={this.updateEventCount} />
       </div>
     )
   }
