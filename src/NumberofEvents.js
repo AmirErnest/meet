@@ -23,7 +23,7 @@ class NumberofEvents extends Component {
   this.props.onHandleEventCount(eventCount);
   };
 
-  render() {
+  render() { 
     return (
       <div className="numberOfEvents">
         <ErrorAlert text={this.state.errorText}/>
