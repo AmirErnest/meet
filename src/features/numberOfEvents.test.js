@@ -38,8 +38,8 @@ test('User can change the number of events they want to see', ({ given, when, th
 
     then('only the specified number of events should load', () => {
       AppWrapper.update();
-      expect(AppWrapper.find('.event')).toHaveLength(1);
+      expect(AppWrapper.find('.event')).toHaveLength(2);
     });
 });
 
-})
+});

@@ -64,4 +64,4 @@ test('User can select a city from the suggested list', ({ given, and, when, then
     expect(AppWrapper.find('.event')).toHaveLength(mockData.length);
   });
   });
-});
+}); 
