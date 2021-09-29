@@ -4,6 +4,7 @@ import App from '../App';
 import { mockData } from '../mock-data';
 import { loadFeature, defineFeature } from 'jest-cucumber';
 import CitySearch from '../CitySearch';
+import { extractLocations } from '../api';
 
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
@@ -25,6 +26,7 @@ defineFeature(feature, test => {
 
 test('User should see a list of suggestions when they search for a city', ({ given, when, then }) => {
   let CitySearchWrapper;
+  const locations = extractLocations(mockData);
   given('the main page is open', () => {
     CitySearchWrapper = shallow(<CitySearch updateEvents={() => {}} locations={locations} />);
   });

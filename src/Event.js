@@ -32,6 +32,7 @@ class Event extends Component {
   }
 
   render() {
+    console.log(this.state.showMore);
     const { event } = this.props;
     return (
       <>
@@ -40,7 +41,9 @@ class Event extends Component {
           <p><b>Creator:</b> {event.creator.email}</p>
           <p><b>Start Time:</b> {event.start.dateTime}</p>
           <p><b>Location:</b> {event.location}</p>
-          <p className="description">{this.desc(event)}</p>
+          { this.state.showMore === true ? (
+            <p className="description">{this.desc(event)}</p>
+          ) : null } 
           <button className="details-btn" onClick={() => {this.showMore(event)}}>{this.showText()}</button>
         </div>
       </>
