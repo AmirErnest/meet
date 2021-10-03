@@ -14,7 +14,7 @@ class Alert extends Component {
 
   render() {
     return (
-      <div className="Alert">
+      <div style={{zIndex: "1", fontSize: "15px"}} className="Alert">
         <p style={this.getStyle()}>{this.props.text}</p>
       </div>
     );
@@ -24,32 +24,16 @@ class Alert extends Component {
 class InfoAlert extends Alert {
   constructor(props) {
     super(props);
-    this.color = '#365c89';
-  }
-  
-  getStyle = () => {
-    return {
-      color: this.color,
-      fontWeight: '500',
-      fontSize: '1em',
-      height: '45px',
-    };
+    this.color = 'blue';
   }
 }
 
 class ErrorAlert extends Alert {
   constructor(props) {
     super(props);
-    this.color = 'red'
-  }
-
-  getStyle = () => {
-    return {
-      color: this.color,
-      fontWeight: '500',
-      fontSize: '1em',
-    };
+    this.color = 'red';
   }
 }
 
-export { InfoAlert, ErrorAlert };
+export { InfoAlert };
+export { ErrorAlert };
