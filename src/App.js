@@ -5,15 +5,11 @@ import CitySearch from './CitySearch';
 import NumberofEvents from './NumberofEvents';
 import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 import WelcomeScreen from './WelcomeScreen';
-<<<<<<< HEAD
-import { WarningAlert } from './Alert';
-=======
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import EventGenre from './EventGenre';
 import { WarningAlert } from './Alert';
 import './App.css';
 
->>>>>>> data-vis
 
 
 class App extends Component {
@@ -28,16 +24,8 @@ class App extends Component {
 
   async componentDidMount() {
     this.mounted = true;
-<<<<<<< HEAD
-    console.log("navigatoronlineornot:", navigator.onLine);
-    if (!navigator.onLine) { 
-      console.log("ifStatement!!!", navigator.onLine);
-      getEvents().then((events) => {
-        console.log("&&&&&&&&&&:", events);
-=======
     if (!navigator.onLine) { 
       getEvents().then((events) => {
->>>>>>> data-vis
         if (this.mounted) {
           this.setState({ 
             showWelcomeScreen: false,
