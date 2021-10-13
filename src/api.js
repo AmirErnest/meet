@@ -18,6 +18,7 @@ import NProgress from 'nprogress';
 };
 
 export const checkToken = async (accessToken) => {
+  console.log("accessTokenApi:", accessToken);
   const result = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
   )
@@ -62,14 +63,15 @@ export const getEvents = async () => {
       return mockData;
     }
 
-    const token = await getAccessToken();
-
     if(!navigator.onLine){
-      const events = localStorage.getItem("lastEvents");
+      const lastEvents = localStorage.getItem("lastEvents");
+      //console.log("lastEvents:" , lastEvents, "parsedEvents:", JSON.parse(lastEvents));
       NProgress.done();
-      return events?JSON.parse(events).events:[];
+      return lastEvents?JSON.parse(lastEvents).events:[];
     }
   
+    const token = await getAccessToken();
+
     if (token) {
       removeQuery();
       const url = 'https://mchhj97rbf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' + '/' + token;
