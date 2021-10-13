@@ -7,6 +7,9 @@ import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 import WelcomeScreen from './WelcomeScreen';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import EventGenre from './EventGenre';
+import { WarningAlert } from './Alert';
+import './App.css';
+
 
 
 class App extends Component {
@@ -15,11 +18,23 @@ class App extends Component {
     locations: [],
     numberOfEvents: 15,
     currentLocation: 'all',
-    showWelcomeScreen: undefined
+    showWelcomeScreen: undefined,
+    offlineText: navigator.onLine
   }
 
   async componentDidMount() {
     this.mounted = true;
+    if (!navigator.onLine) { 
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({ 
+            showWelcomeScreen: false,
+            events, 
+            locations: extractLocations(events), 
+          });
+        }
+      });
+      }
     const accesssToken = localStorage.getItem('access_token');
     const isTokenValid = (await checkToken(accesssToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
@@ -29,7 +44,7 @@ class App extends Component {
       getEvents().then((events) => {
       console.log(events);
       if (this.mounted) {
-        this.setState({ events, locations: extractLocations(events) });
+        this.setState({ events: events.slice(0, this.state.numberOfEvents), locations: extractLocations(events), offlineText: '' });
       }
     });
   }
@@ -79,6 +94,7 @@ class App extends Component {
     if(this.state.showWelcomeScreen === undefined) return <div className= "App" />
     return (
       <div className="App">
+        <WarningAlert text={this.state.offlineText === false ? 'you are offline! events maybe out of date' : ''} />
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents}/>
         <NumberofEvents onHandleEventCount={this.handleEventCount} numberOfEvents={this.state.numberOfEvents} />
         <h4>Events in each city</h4>
